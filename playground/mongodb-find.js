@@ -27,15 +27,15 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', {useNewUrlParser: true}
     // });
 
 
-    db.collection('Users').find({name: 'Ilyas Assainov'}).count()
-    .then((count) => {
-        console.log(`Users with name Ilyas Assainov: ${count} `);
-    })
-    .catch((err) => {
-        console.log('Unable to fetch user count', err);
-    });
+    // db.collection('Users').find({name: 'Ilyas Assainov'}).count()
+    // .then((count) => {
+    //     console.log(`Users with name Ilyas Assainov: ${count} `);
+    // })
+    // .catch((err) => {
+    //     console.log('Unable to fetch user count', err);
+    // });
 
-    db.collection('Users').find({name: 'Ilyas Assainov'}).toArray()
+    db.collection('Users').find({name: 'Andrew'}).toArray()
     .then((docs) => {
         console.log(JSON.stringify(docs, undefined, 2));
     })
