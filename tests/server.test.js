@@ -87,7 +87,7 @@ describe('Server', () => {
 
     describe('GET /todos/:id', () => {
         it('should return 404 when passed invalid id', (done) => {
-            id = '123';
+            let id = '123';
             request(app)
                 .get('/todos/' + id)
                 .expect(404)
@@ -95,7 +95,7 @@ describe('Server', () => {
         });
 
         it('should return todo document', (done) => {
-            id = '5bf5b691401642285ccbc942';
+            let id = '5bf5b691401642285ccbc942';
 
             request(app)
                 .get('/todos/' + id)
@@ -109,7 +109,7 @@ describe('Server', () => {
         });
 
         it('should return 404 when doc is not found', (done) => {
-            id = new ObjectID().toHexString();
+            let id = new ObjectID().toHexString();
 
             request(app)
                 .get('/todos/' + id)
