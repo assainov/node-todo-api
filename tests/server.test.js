@@ -10,13 +10,14 @@ const todos = [
         _id: ObjectID('5bf5b691401642285ccbc942'),
         text: "important task 1"
     }, {
+        _id: ObjectID('5bf5b691401642285ccbc943'),
         text: "important task 2"
     }
 ];
 
 //  Clean the db before each done()
 beforeEach((done) => {
-    Todo.remove({})
+    Todo.deleteMany({})
     .then(() => {
         return Todo.insertMany(todos);
     })
@@ -117,4 +118,43 @@ describe('Server', () => {
                 .end(done);
         });
     });
+
+    describe('DELETE /todos/:id', () => {
+        it('should remove a todo', (done) => {
+            request(app)
+                .delete('/todos/' + todos[0]._id.toHexString())
+                .expect(200)
+                .expect((res) => {
+                    expect(res.body.todo._id).toBe(todos[0]._id.toHexString());
+                })
+                .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
+
+                    Todo.findById(todos[0]._id.toHexString())
+                    .then (todo => {
+                        expect(todo).toNotExist();
+                        done();
+                    })
+                    .catch(err => done(err));
+                });
+        });
+
+        it('should return 404 if todo not found', (done) => {
+            let id = '6bf5b691401642285ccbc942'; // Doesn't exist
+            request(app)
+                .delete('/todos/' + id)
+                .expect(404)
+                .end(done);
+        });
+
+        it('should return 404 if object id is invalid', (done) => {
+            let id = 123;
+            request(app)
+                .delete('/todos/' + id)
+                .expect(404)
+                .end(done);
+        });
+    })
 });
