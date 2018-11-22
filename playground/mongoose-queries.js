@@ -37,11 +37,26 @@ const id = '5bf2b9423a228736983033add';
 // })
 // .catch((err) => console.log(err));
 
-User.findById(id)
-.then(user => {
-    if (!user) {
-        return console.log('User not found');
+// User.findById(id)
+// .then(user => {
+//     if (!user) {
+//         return console.log('User not found');
+//     }
+//     console.log('User email:', user.email);
+// })
+// .catch(err => console.log('Invalid user id'));
+
+const todos = [
+    {
+        _id: ObjectID('5bf5b691401642285ccbc942'),
+        text: "important task 1"
+    }, {
+        text: "important task 2"
+    }, {
+        text: "thank you for attention"
     }
-    console.log('User email:', user.email);
-})
-.catch(err => console.log('Invalid user id'));
+];
+
+Todo.insertMany(todos)
+.then((docs) => console.log(docs))
+.catch((err) => console.log(err));
