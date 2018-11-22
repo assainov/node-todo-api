@@ -11,7 +11,9 @@ const todos = [
         text: "important task 1"
     }, {
         _id: ObjectID('5bf5b691401642285ccbc943'),
-        text: "important task 2"
+        text: "important task 2",
+        completed: true,
+        completedAt: 333
     }
 ];
 
@@ -156,5 +158,57 @@ describe('Server', () => {
                 .expect(404)
                 .end(done);
         });
-    })
+    });
+
+    describe('PATCH /todos/:id', () => {
+        it('should update the todo', (done) => {
+            let hexId = todos[0]._id.toHexString();
+
+            request(app)
+                .patch('/todos/' + hexId)
+                .send({
+                    text: "finish the mvp for nightfixer",
+                    completed: true
+                })
+                .expect(200)
+                .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
+                    Todo.findById(hexId)
+                    .then(doc => {
+                        expect(doc.text).toBe('finish the mvp for nightfixer');
+                        expect(doc.completed).toBe(true);
+                        expect(doc.completedAt).toBeA('number');
+                        done();
+                    })
+                    .catch(err => done(err));
+                });
+        });
+
+        it('should clear completedAt when todo gets not completed', (done) => {
+            let hexId = todos[1]._id.toHexString();
+
+            request(app)
+                .patch('/todos/' + hexId)
+                .send({
+                    text: "good enough task",
+                    completed: false
+                })
+                .expect(200)
+                .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
+                    Todo.findById(hexId)
+                    .then(doc => {
+                        expect(doc.text).toBe('good enough task');
+                        expect(doc.completed).toBe(false);
+                        expect(doc.completedAt).toNotExist();
+                        done();
+                    })
+                    .catch(err => done(err));
+                });
+        });
+    });
 });
