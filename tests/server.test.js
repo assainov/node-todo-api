@@ -8,10 +8,10 @@ const {Todo} = require('../server/models/todo');
 const todos = [
     {
         _id: ObjectID('5bf5b691401642285ccbc942'),
-        text: "important task 1"
+        text: "important test 1"
     }, {
         _id: ObjectID('5bf5b691401642285ccbc943'),
-        text: "important task 2",
+        text: "important test 2",
         completed: true,
         completedAt: 333
     }
@@ -105,7 +105,7 @@ describe('Server', () => {
                 .expect(200)
                 .expect(res => {
                     expect(res.body.todo).toInclude({
-                        text: "important task 1"
+                        text: "important test 1"
                     });
                 })
                 .end(done);
