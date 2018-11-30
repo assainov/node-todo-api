@@ -325,4 +325,24 @@ describe('Server', () => {
                 .end(done);
         });
     });
+
+    describe('DELETE /users/me/token', () => {
+        it('should delete token on log out', (done) => {
+            request(app)
+                .delete('/users/me/token')
+                .set('x-auth', users[0].tokens[0].token)
+                .expect(200)
+                .end((err, res) => {
+                    expect(err).toNotExist();
+                    User.findById(users[0]._id)
+                    .then(user => {
+                        expect(user).toExist();
+                        expect(user.tokens[0]).toNotExist();
+                        done();
+                    })
+                    .catch(err => done(err));
+                });
+
+        });
+    });
 });
