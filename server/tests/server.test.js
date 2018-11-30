@@ -222,13 +222,13 @@ describe('Server', () => {
         });
     });
 
-    describe('POST /users', () => {
+    describe('POST /users/register', () => {
         it('should create a new user', (done) => {
             const email = 'test@user.com';
             const password = '123456';
 
             request(app)
-                .post('/users')
+                .post('/users/register')
                 .send({email, password})
                 .expect(200)
                 .expect(res => {
@@ -256,7 +256,7 @@ describe('Server', () => {
             const password = '333';
 
             request(app)
-                .post('/users')
+                .post('/users/register')
                 .send({email, password})
                 .expect(400)
                 .end(done);
@@ -267,7 +267,7 @@ describe('Server', () => {
             const password = 'easyone';
 
             request(app)
-                .post('/users')
+                .post('/users/register')
                 .send({email, password})
                 .expect(400)
                 .expect(res => {
