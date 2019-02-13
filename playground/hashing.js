@@ -2,6 +2,11 @@ const {SHA256} = require('crypto-js');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
+// this is a dummy comment
+// this is a dummy comment
+// this is a dummy comment
+// this is a dummy comment
+
 const password = '123abc!';
 
 bcrypt.genSalt(10, (err, salt) => {
@@ -18,7 +23,7 @@ bcrypt.compare(password, hashedPassword, (err, result) => {
 
 
 // const data = {
-//     message: 'suka blyat'
+//     message: 'hello my dear'
 // };
 
 // const token = jwt.sign(data, '123abc');
